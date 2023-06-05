@@ -23,14 +23,14 @@ if (option == "s")
         Console.WriteLine($"{count++,-2} : {image.Repo,-35}{image.Tag,-20}\t{image.Id,-20}");
 
 
-    Console.WriteLine("是否采用7z进行压缩(默认为否)请输入 y、n");
+    Console.WriteLine("Whether to use 7z for compression (default is no). Please enter y or n.");
     string? isCompress = Console.ReadLine();
     if (isCompress == "y" && !string.IsNullOrWhiteSpace(isCompress))
     {
         compress = true;
     }
 
-    Console.WriteLine("Select images to export, use space to seperate");
+    Console.WriteLine("Select images to export, use space to seperate.");
 
     string? input = Console.ReadLine();
 
@@ -47,7 +47,7 @@ if (option == "s")
             //var selectedImages = images.Where(image => image.Id == number.ToString()).ToArray();
 
             // 输出选中的图像信息
-            Console.WriteLine("Selected images:");
+            //Console.WriteLine("Selected images:");
 
             int[] selected = Regex.Split(input, @"\s+").Select(x => int.Parse(x)).ToArray();
             exportImages(selected, images);
@@ -61,6 +61,8 @@ if (option == "s")
                                     .Where(item => item.Image.Repo.Contains(input))
                                     .Select(item => item.Index)
                                     .ToList();
+            // 输出选中的图像信息
+            Console.WriteLine("Matching images that meet the criteria.");
             int count2 = 0;
             foreach (var image in filteredImages)
                 Console.WriteLine($"{matchingIndexes[count2++],-2} : {image.Repo,-35}{image.Tag,-20}\t{image.Id,-20}");
@@ -69,7 +71,7 @@ if (option == "s")
             while (true)
             {
                 // 输出选中的图像信息
-                Console.WriteLine("请输入选择的id(不支持全选):");
+                Console.WriteLine("Please enter the selected ID (multiple selections not supported).");
                 subInput = Console.ReadLine();
 
                 if (!string.IsNullOrWhiteSpace(subInput))
@@ -84,7 +86,7 @@ if (option == "s")
     }
     else
     {
-        Console.WriteLine("No input entered. Showing all images:");
+        Console.WriteLine("No input provided, exporting all images.");
         // 使用所有图像进行后续处理，与上述代码类似
         input = string.Join(" ", Enumerable.Range(1, images.Count - 1).Select(x => x.ToString()));
         var selected = Regex.Split(input, @"\s+").Select(x => int.Parse(x)).ToArray();
